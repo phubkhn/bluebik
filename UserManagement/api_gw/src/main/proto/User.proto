@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package com.bluebik.grpc.user;
+
+option java_package = "com.bluebik.grpc.user";
+option java_outer_classname = "UserProto";
+
+service UserService {
+  rpc GetUserById (UserRequest) returns (UserResponse);
+  rpc GetAllUsers (SearchRequest) returns (ListUser);
+  rpc AddUser (User) returns (UserResponse);
+  rpc UpdateUser (User) returns (UserResponse);
+  rpc DeleteUser (UserRequest) returns (Response);
+
+  rpc AddMultipleUser (ListUser) returns (ListUser);
+  rpc UpdateMultipleUser (BulkUpdateRequest) returns (Response);
+  rpc DeleteMultipleUser (BulkDeleteRequest) returns (Response);
+}
+
+message User {
+  int64 id = 1;
+  string name = 2;
+  string info = 3;
+}
+
+message ListUser {
+  repeated User users = 1;
+}
+
+message UserRequest {
+  int64 id = 1;
+}
+
+message UserResponse {
+  User user = 1;
+}
+
+
+message Response {
+  string message = 1;
+}
+
+message SearchRequest {
+  string pattern = 1;
+}
+
+message BulkDeleteRequest {
+  repeated int64 ids = 1;
+}
+
+message BulkUpdateRequest {
+  repeated int64 ids = 1;
+  string newName = 2;
+  string newInfo = 3;
+}
+
+
